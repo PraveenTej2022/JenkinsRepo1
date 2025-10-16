@@ -1,24 +1,24 @@
 pipeline {
     agent any
     stages {
-        stage('Clone') {
+        stage('Clone Repository') {
             steps {
                 git 'https://github.com/PraveenTej2022/JenkinsRepo1.git'
             }
         }
         stage('Build') {
             steps {
-                sh 'echo "Building the project..."'
+                sh 'mvn clean package'
             }
         }
         stage('Test') {
             steps {
-               sh 'echo "Running tests..."'
+                sh 'mvn test'
             }
         }
-        stage('Deploy') {
+        stage('Deploy to Tomcat') {
             steps {
-                sh 'echo "Deploying..."'
+                sh 'scp target/*.war user@server:/var/lib/tomcat/webapps/'
             }
         }
     }
